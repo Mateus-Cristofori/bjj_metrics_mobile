@@ -37,9 +37,6 @@ export default function Welcome() {
           >
             <Text style={styles.ctaButtonText}>Entrar</Text>
           </TouchableOpacity>
-          <Text style={styles.termsText}>
-            Ao continuar, você concorda com nossos Termos de Uso
-          </Text>
         </Animated.View>
       </View>
     </SafeAreaView>

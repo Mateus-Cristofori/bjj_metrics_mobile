@@ -116,11 +116,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#FFFFFF",
   },
-  termsText: {
-    textAlign: "center",
-    fontSize: 12,
-    color: "rgba(160, 160, 160, 0.6)",
-  },
 });
 
 export default styles;
