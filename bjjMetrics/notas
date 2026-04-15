@@ -1,0 +1,52 @@
+src/
+├── app/                         # ROTAS (Expo Router)
+│   ├── _layout.tsx              # Stack global
+│   ├── index.tsx                # redirect inicial
+│
+│   ├── (auth)/                  # fluxo não autenticado
+│   │   ├── login.tsx
+│   │   └── register.tsx
+│
+│   ├── (tabs)/                  # fluxo autenticado
+│   │   ├── _layout.tsx          # Tabs layout
+│   │   ├── dashboard.tsx
+│   │   ├── training.tsx
+│   │   ├── roll.tsx
+│   │   └── profile.tsx
+│
+│   ├── training/
+│   │   └── [id].tsx             # detalhe do treino
+│
+│   └── roll/
+│       └── [id].tsx             # detalhe do roll (futuro)
+│
+├── services/                    # comunicação com backend
+│   ├── api.ts
+│   ├── authService.ts
+│   ├── trainingService.ts
+│   ├── rollService.ts
+│   └── statsService.ts
+│
+├── hooks/                       # lógica reutilizável
+│   ├── useAuth.ts
+│   ├── useStats.ts
+│   └── useFetch.ts
+│
+├── components/                  # UI reutilizável
+│   ├── ui/                      # botões, inputs, etc
+│   ├── charts/                  # gráficos (futuro)
+│   └── layout/                  # wrappers/layouts
+│
+├── types/                       # DTOs (espelho do backend)
+│   ├── auth.ts
+│   ├── training.ts
+│   ├── roll.ts
+│   └── stats.ts
+│
+├── utils/
+│   ├── format.ts
+│   └── date.ts
+│
+└── constants/
+    └── api.ts                   # base URL, configs
+    
