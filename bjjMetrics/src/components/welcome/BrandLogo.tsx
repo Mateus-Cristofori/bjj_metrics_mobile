@@ -1,7 +1,7 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import logo from "../../assets/logo.png";
 import styles from "./WelcomeStyles";
 
 export function BrandLogo() {
@@ -11,9 +11,7 @@ export function BrandLogo() {
       entering={FadeInDown.duration(600).delay(200)}
     >
       <View style={styles.brandContainer}>
-        <View style={styles.logoBackground}>
-          <Icon name="shield-outline" size={40} color="#38A7B5" />
-        </View>
+        <Image source={logo} style={styles.logoImage} />
         <Text style={styles.title}>BJJ Metrics</Text>
         <Text style={styles.subtitle}>BRAZIL</Text>
       </View>

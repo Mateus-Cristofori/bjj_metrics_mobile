@@ -116,6 +116,13 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#FFFFFF",
   },
+  logoImage: {
+    width: 70,
+    height: 70,
+    resizeMode: "contain",
+    marginBottom: 16,
+    borderRadius: 10,
+  },
 });
 
 export default styles;
