@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     width: "100%",
     marginBottom: 15,
+    borderWidth: 1,
   },
   label: {
     fontSize: 14,
@@ -72,25 +73,24 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   textInput: {
-    backgroundColor: "#1E293B",
-    borderRadius: 8,
+    borderColor: "#E2E8F0",
     borderWidth: 1,
-    borderColor: "#334155",
+    backgroundColor: "#000",
+    borderRadius: 8,
     paddingHorizontal: 15,
     height: 50,
     color: "#E2E8F0",
     fontSize: 16,
   },
   pickerWrapper: {
-    backgroundColor: "#1E293B",
+    backgroundColor: "#000",
     borderRadius: 8,
+    borderColor: "#E2E8F0",
     borderWidth: 1,
-    borderColor: "#334155",
     height: 50,
     justifyContent: "center",
   },
   picker: {
-    color: "#E2E8F0",
     ...Platform.select({
       android: { backgroundColor: "transparent" },
       ios: {},

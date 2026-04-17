@@ -56,7 +56,7 @@ export default function RegisterScreen() {
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor="#64748B"
+        placeholderTextColor="#94A3B8"
         keyboardType={keyboardType}
         secureTextEntry={secureTextEntry}
         autoCapitalize="none"
@@ -160,12 +160,12 @@ export default function RegisterScreen() {
                 selectedValue={formData.belt}
                 onValueChange={(belt) => handleInputChange("belt", belt)}
                 style={styles.picker}
-                dropdownIconColor="#E2E8F0"
+                dropdownIconColor="#000"
               >
                 <Picker.Item
                   label="Selecione sua faixa"
                   value=""
-                  color="#64748B"
+                  color="#94A3B8"
                 />
                 <Picker.Item label="Branca" value="branca" color="#000" />
                 <Picker.Item label="Azul" value="azul" color="#000" />
