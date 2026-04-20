@@ -39,7 +39,6 @@ export default function DashboardScreen() {
               <Image source={logo} style={styles.logoImage} />
             </View>
             <View>
-              <Text style={styles.appName}>BJJ METRICS</Text>
               <Text style={styles.userName}>Olá, Mateus</Text>
             </View>
           </View>
