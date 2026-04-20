@@ -6,7 +6,7 @@ const colors = {
   accentTertiary: "#F59E0B",
   textMuted: "#94A3B8",
   cardBackground: "#1E293B",
-  background: "#1A1E24",
+  background: "#0C0E10",
   text: "#E5E7EB",
   textDark: "#4B5563",
   white: "#FFFFFF",
@@ -28,3 +28,4 @@ const PADDING = 16;
 const SUMMARY_CARD_WIDTH = (width - PADDING * 2 - 12 * 2) / 3;
 
 export { colors, fonts, PADDING, SUMMARY_CARD_WIDTH, width };
+

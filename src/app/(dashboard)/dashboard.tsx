@@ -93,7 +93,7 @@ export default function DashboardScreen() {
                 },
               ],
             }}
-            width={Dimensions.get("window").width - 32}
+            width={Dimensions.get("window").width - 45}
             height={220}
             yAxisLabel=""
             yAxisSuffix=""
@@ -119,7 +119,7 @@ export default function DashboardScreen() {
                 },
               ],
             }}
-            width={Dimensions.get("window").width - 32}
+            width={Dimensions.get("window").width - 45}
             height={220}
             yAxisLabel=""
             yAxisSuffix=""
