@@ -50,9 +50,14 @@ const beltData = [
   { label: "Marrom", percentage: 12, color: colors.brown },
   { label: "Preta", percentage: 30, color: colors.fullDark },
 ];
+
+const sortedBeltData = [...beltData].sort(
+  (a, b) => b.percentage - a.percentage,
+);
+
 export {
-  beltData,
   chartData,
+  sortedBeltData,
   topTechniquesData,
   trainingSequenceData,
   weekDays,

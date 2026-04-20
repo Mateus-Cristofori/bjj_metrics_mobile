@@ -1,27 +1,28 @@
+import { ProgressBar } from "@/components/dashboard/ProgressBar";
+import SectionHeader from "@/components/dashboard/SectionHeader";
 import React from "react";
 import {
-    Dimensions,
-    Image,
-    ScrollView,
-    StatusBar,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Image,
+  ScrollView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { BarChart, LineChart, PieChart } from "react-native-chart-kit";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import logo from "../../assets/logo.png";
+import { barChartConfig, lineChartConfig } from "./config/chartConfig";
 import styles from "./dashboard.styles";
 import {
-    beltData,
-    topTechniquesData,
-    trainingSequenceData,
-    weeklyTrainingData,
+  sortedBeltData,
+  topTechniquesData,
+  trainingSequenceData,
+  weeklyTrainingData,
 } from "./mock/mockData";
 import { colors } from "./types/types";
-import SectionHeader from "@/components/dashboard/SectionHeader";
-import { ProgressBar } from "@/components/dashboard/ProgressBar";
 
 export default function DashboardScreen() {
   return (
@@ -80,7 +81,7 @@ export default function DashboardScreen() {
             </View>
           </View>
         </View>
-        {/* Treinos esta Semana (Gráfico de Barras Falso) */}
+        {/* Gráfico de barras */}
         <SectionHeader title="Treinos esta Semana" />
         <View style={styles.chartCard}>
           <BarChart
@@ -92,38 +93,21 @@ export default function DashboardScreen() {
                 },
               ],
             }}
-            width={Dimensions.get("window").width - 32} // Largura da tela - paddings
+            width={Dimensions.get("window").width - 32}
             height={220}
             yAxisLabel=""
             yAxisSuffix=""
             fromZero={true}
             showValuesOnTopOfBars={false}
             showBarTops={false}
-            chartConfig={{
-              backgroundColor: colors.cardBackground, // Cor de fundo do seu card
-              backgroundGradientFrom: colors.cardBackground,
-              backgroundGradientTo: colors.cardBackground,
-              decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(138, 99, 255, ${opacity})`, // Cor do seu 'accent'
-              labelColor: (opacity = 1) => `rgba(150, 150, 150, ${opacity})`, // Cor do seu 'textMuted'
-              style: {
-                borderRadius: 16,
-              },
-              propsForDots: {
-                r: "0", // Esconde os pontos na linha
-              },
-              propsForBackgroundLines: {
-                strokeWidth: "0", // Esconde as linhas de fundo
-              },
-              barPercentage: 0.5,
-            }}
+            chartConfig={barChartConfig}
             style={{
               borderRadius: 16,
-              paddingRight: 40, // Ajuste para que o último label não seja cortado
+              paddingRight: 40,
             }}
           />
         </View>
-        {/* Sequência de Treinos (Gráfico de Linha Falso) */}
+        {/* Gráfico de linhas */}
         <SectionHeader title="Sequência de Treinos (Últimas 6 Semanas)" />
         <View style={styles.chartCard}>
           <LineChart
@@ -140,33 +124,10 @@ export default function DashboardScreen() {
             yAxisLabel=""
             yAxisSuffix=""
             fromZero={true}
-            chartConfig={{
-              backgroundColor: colors.cardBackground,
-              backgroundGradientFrom: colors.cardBackground,
-              backgroundGradientTo: colors.cardBackground,
-              decimalPlaces: 0,
-              color: (opacity = 1) => `rgba(138, 99, 255, ${opacity})`, // Cor do seu 'accent'
-              labelColor: (opacity = 1) => `rgba(150, 150, 150, ${opacity})`, // Cor do seu 'textMuted'
-              style: {
-                borderRadius: 16,
-              },
-              propsForDots: {
-                r: "4", // Tamanho dos pontos
-                strokeWidth: "2",
-                stroke: colors.accent,
-              },
-              propsForBackgroundLines: {
-                strokeWidth: "0",
-              },
-            }}
-            bezier // Deixa a linha curvada
-            style={{
-              borderRadius: 16,
-              paddingRight: 45, // Ajuste para que o último label não seja cortado
-            }}
+            chartConfig={lineChartConfig}
           />
         </View>
-        {/* Top 3 Técnicas (Gráfico de Rosca Falso) */}
+        {/* Gráfico de rosquina */}
         <SectionHeader title="Top 3 Técnicas Treinadas" />
         <View
           style={[
@@ -177,30 +138,28 @@ export default function DashboardScreen() {
           <PieChart
             data={topTechniquesData.map((item) => ({
               name: item.technique,
-              population: item.percentage, // 'population' é o campo para o valor
+              population: item.percentage,
               color:
                 item.technique === "Finalização"
                   ? colors.donutSegment1
                   : item.technique === "Guarda"
                     ? colors.donutSegment2
                     : colors.donutSegment3,
-              legendFontColor: colors.text, // Cor para a legenda interna (que vamos esconder)
+              legendFontColor: colors.text,
               legendFontSize: 12,
             }))}
-            width={120} // Largura do container do gráfico
-            height={120} // Altura do container
+            width={150}
+            height={120}
             chartConfig={{
               color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
             }}
             accessor={"population"}
             backgroundColor={"transparent"}
-            paddingLeft={"15"} // Ajusta a posição do gráfico
-            center={[0, 0]} // Centraliza o gráfico
-            hasLegend={false} // Esconde a legenda padrão da biblioteca
-            absolute // Mostra os valores absolutos (ex: 70) em vez de porcentagens
+            paddingLeft={"40"}
+            center={[0, 0]}
+            hasLegend={false}
+            absolute
           />
-
-          {/* Sua Legenda Customizada (continua funcionando perfeitamente) */}
           <View style={{ flex: 1 }}>
             {topTechniquesData.map((item) => (
               <View key={item.technique} style={styles.legendItem}>
@@ -227,14 +186,14 @@ export default function DashboardScreen() {
             ))}
           </View>
         </View>
-        {/* Faixas com quem rolou */}
+        {/* Porcetagem de faixas */}
         <SectionHeader title="Faixas com quem rolou" />
         <View style={styles.card}>
-          {beltData.map((belt) => (
+          {sortedBeltData.map((belt) => (
             <ProgressBar key={belt.label} {...belt} />
           ))}
         </View>
-        {/* Botão "Registrar Treino" */}
+
         <TouchableOpacity style={styles.registerButton}>
           <Icon name="plus" size={20} color={colors.background} />
           <Text style={styles.registerButtonText}>Registrar Treino</Text>
