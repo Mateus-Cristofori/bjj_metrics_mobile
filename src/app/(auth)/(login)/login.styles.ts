@@ -1,0 +1,118 @@
+import { StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0C0E10",
+    justifyContent: "center",
+    paddingHorizontal: 24,
+    paddingVertical: 48,
+  },
+  backgroundGlowTop: {
+    position: "absolute",
+    top: -100,
+    left: 0,
+    right: 0,
+    height: 500,
+    width: 500,
+    alignSelf: "center",
+    borderRadius: 250,
+  },
+  backgroundGlowBottom: {
+    position: "absolute",
+    bottom: -150,
+    right: -150,
+    height: 300,
+    width: 300,
+    borderRadius: 150,
+  },
+  keyboardView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  logoPlaceholder: {
+    width: 60,
+    height: 60,
+    borderRadius: 12,
+    backgroundColor: "#1E293B",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 30,
+    overflow: "hidden",
+  },
+  title: { fontSize: 24, fontWeight: "700", color: "#E2E8F0", marginBottom: 8 },
+  subtitle: { fontSize: 16, color: "#E2E8F0", marginBottom: 35 },
+  inputGroup: { width: "100%", marginBottom: 20 },
+  label: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#CBD5E1",
+    marginBottom: 8,
+    alignSelf: "flex-start",
+  },
+  inputWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
+    borderRadius: 8,
+    height: 50,
+    paddingHorizontal: 15,
+  },
+  icon: { marginRight: 10 },
+  input: { flex: 1, fontSize: 16, color: "#fff", height: "100%" },
+  loginButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#38A7B5",
+    width: "100%",
+    height: 50,
+    borderRadius: 8,
+    marginTop: 30,
+  },
+  loginButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 10,
+  },
+  footer: {
+    justifyContent: "space-around",
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 25,
+  },
+  spacer: {
+    flex: 1,
+  },
+  linkText: {
+    color: "#3B82F6",
+    fontWeight: "500",
+    fontSize: 14,
+    textAlign: "center",
+  },
+  loginLogoImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
+  },
+  footerContainer: {
+    width: "95%",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 25,
+    flexWrap: "wrap",
+  },
+
+  separator: {
+    fontSize: 14,
+    color: "#64748B",
+    marginHorizontal: 10,
+  },
+});
+
+export default styles;
