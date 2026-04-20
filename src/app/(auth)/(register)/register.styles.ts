@@ -1,0 +1,145 @@
+import { Platform, StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#0C0E10",
+    justifyContent: "space-between",
+    paddingHorizontal: 24,
+    paddingVertical: 48,
+  },
+  backgroundGlowTop: {
+    position: "absolute",
+    top: -100,
+    left: 0,
+    right: 0,
+    height: 500,
+    width: 500,
+    alignSelf: "center",
+    borderRadius: 250,
+  },
+  backgroundGlowBottom: {
+    position: "absolute",
+    bottom: -150,
+    right: -150,
+    height: 300,
+    width: 300,
+    borderRadius: 150,
+  },
+  scrollContent: {
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+    alignItems: "center",
+  },
+  header: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "bold",
+    color: "#E2E8F0",
+    marginTop: 10,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "#94A3B8",
+    letterSpacing: 1,
+  },
+  createAccountText: {
+    fontSize: 18,
+    color: "#E2E8F0",
+    marginTop: 20,
+  },
+  sectionHeader: {
+    alignSelf: "flex-start",
+    width: "100%",
+    fontSize: 12,
+    fontWeight: "bold",
+    color: "#94A3B8",
+    marginTop: 25,
+    marginBottom: 10,
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+  },
+  inputContainer: {
+    width: "100%",
+    marginBottom: 15,
+    borderWidth: 1,
+  },
+  label: {
+    fontSize: 14,
+    color: "#CBD5E1",
+    marginBottom: 8,
+  },
+  textInput: {
+    borderColor: "#E2E8F0",
+    borderWidth: 1,
+    backgroundColor: "#000",
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    height: 50,
+    color: "#fff",
+    fontSize: 16,
+  },
+  pickerWrapper: {
+    backgroundColor: "#000",
+    borderRadius: 8,
+    borderColor: "#E2E8F0",
+    borderWidth: 1,
+    height: 50,
+    justifyContent: "center",
+  },
+  picker: {
+    ...Platform.select({
+      android: { backgroundColor: "transparent" },
+      ios: {},
+    }),
+  },
+  createButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#38A7B5",
+    width: "100%",
+    height: 50,
+    borderRadius: 8,
+    marginTop: 30,
+  },
+  createButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginRight: 10,
+  },
+  footer: {
+    flexDirection: "row",
+    marginTop: 30,
+  },
+  footerText: {
+    color: "#94A3B8",
+    fontSize: 14,
+  },
+  footerLink: {
+    color: "#3B82F6",
+    fontSize: 14,
+    fontWeight: "bold",
+  },
+  logoImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
+  },
+  registerLogoPlaceholder: {
+    width: 60,
+    height: 60,
+    borderRadius: 12,
+    backgroundColor: "#1E293B",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
+    overflow: "hidden",
+  },
+});
+
+export default styles;

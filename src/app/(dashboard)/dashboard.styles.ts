@@ -1,0 +1,227 @@
+import { StyleSheet } from "react-native";
+import { colors, fonts, PADDING, SUMMARY_CARD_WIDTH } from "./types/types";
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  container: {
+    flexGrow: 1,
+  },
+  contentContainer: {
+    padding: PADDING,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 24,
+  },
+  userInfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  avatarPlaceholder: {
+    width: 40,
+    height: 40,
+    backgroundColor: "#1E293B",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    overflow: "hidden",
+  },
+  logoImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "contain",
+  },
+  appName: {
+    fontFamily: fonts.main,
+    fontSize: 14,
+    color: colors.textMuted,
+    letterSpacing: 1,
+  },
+  userName: {
+    fontFamily: fonts.main,
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.text,
+  },
+  sectionHeader: {
+    fontFamily: fonts.main,
+    fontSize: 12,
+    color: colors.textMuted,
+    fontWeight: "bold",
+    marginBottom: 12,
+    letterSpacing: 0.5,
+  },
+  summaryContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 12,
+    marginBottom: 24,
+  },
+  summaryCard: {
+    width: SUMMARY_CARD_WIDTH,
+    backgroundColor: colors.cardBackground,
+    borderRadius: 10,
+    padding: 16,
+    alignItems: "center",
+    gap: 4,
+  },
+  summaryCardValue: {
+    fontFamily: fonts.main,
+    fontSize: 28,
+    fontWeight: "bold",
+    color: colors.text,
+  },
+  summaryCardLabel: {
+    fontFamily: fonts.main,
+    fontSize: 12,
+    color: colors.textMuted,
+  },
+  card: {
+    backgroundColor: colors.cardBackground,
+    borderRadius: 10,
+    padding: 10,
+    marginBottom: 24,
+  },
+  competitionDetails: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+  },
+  competitionTitle: {
+    fontFamily: fonts.main,
+    fontSize: 16,
+    color: colors.text,
+  },
+  competitionDate: {
+    fontFamily: fonts.main,
+    fontSize: 12,
+    color: colors.textMuted,
+  },
+  competitionDays: {
+    alignItems: "flex-end",
+  },
+  competitionDaysValue: {
+    fontFamily: fonts.main,
+    fontSize: 22,
+    fontWeight: "bold",
+    color: colors.accent,
+  },
+  competitionDaysLabel: {
+    fontFamily: fonts.main,
+    fontSize: 12,
+    color: colors.textMuted,
+  },
+  barChartContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "flex-end",
+    height: 100,
+  },
+  barItem: {
+    alignItems: "center",
+    gap: 6,
+  },
+  bar: {
+    width: 15,
+    backgroundColor: colors.accent,
+    borderRadius: 3,
+  },
+  barLabel: {
+    fontFamily: fonts.main,
+    fontSize: 12,
+    color: colors.textMuted,
+  },
+  donutChartPlaceholder: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: colors.accent,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  donutChartInnerHole: {
+    width: 70,
+    height: 70,
+    borderRadius: 35,
+    backgroundColor: colors.cardBackground,
+  },
+  legendItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 8,
+  },
+  legendColorBox: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+  },
+  legendLabel: {
+    fontFamily: fonts.main,
+    fontSize: 14,
+    color: colors.text,
+  },
+  legendPercentage: {
+    fontFamily: fonts.main,
+    fontSize: 14,
+    color: colors.text,
+    fontWeight: "bold",
+  },
+  progressItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    marginBottom: 12,
+  },
+  progressLabel: {
+    fontFamily: fonts.main,
+    color: colors.text,
+    width: 60,
+  },
+  progressBackground: {
+    flex: 1,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: colors.textDark,
+    overflow: "hidden",
+  },
+  progressFill: {
+    height: "100%",
+  },
+  progressPercentage: {
+    fontFamily: fonts.main,
+    color: colors.text,
+    width: 40,
+    textAlign: "right",
+  },
+  registerButton: {
+    backgroundColor: colors.accent,
+    borderRadius: 10,
+    paddingVertical: 16,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 10,
+    marginTop: 10,
+  },
+  registerButtonText: {
+    fontFamily: fonts.main,
+    fontSize: 18,
+    fontWeight: "bold",
+    color: colors.background,
+  },
+  chartCard: {
+    backgroundColor: colors.cardBackground,
+    borderRadius: 10,
+    marginBottom: 24,
+    padding: 8,
+  },
+});
+
+export default styles;
