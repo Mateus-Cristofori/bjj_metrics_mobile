@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flexGrow: 1,
+    backgroundColor: colors.background,
   },
   contentContainer: {
     padding: PADDING,

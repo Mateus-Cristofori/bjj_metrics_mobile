@@ -26,7 +26,7 @@ const lineChartConfig = {
   backgroundGradientFrom: colors.cardBackground,
   backgroundGradientTo: colors.cardBackground,
   decimalPlaces: 0,
-  color: (opacity = 1) => `rgba(34, 197, 94, ${opacity})`,
+  color: (opacity = 1) => `rgba(59, 130, 246, ${opacity})`,
   labelColor: (opacity = 1) => `rgba(148, 163, 184, ${opacity})`,
   style: {
     borderRadius: 16,
@@ -37,11 +37,12 @@ const lineChartConfig = {
   propsForDots: {
     r: "5",
     strokeWidth: "2",
-    stroke: "#22C55E",
-    fill: "#22C55E",
+    stroke: "#3B82F6",
+    fill: "#3B82F6",
   },
-  fillShadowGradient: "#22C55E",
-  fillShadowGradientOpacity: 0.2,
+  fillShadowGradient: "#3B82F6",
+  fillShadowGradientOpacity: 0.5,
 };
 
 export { barChartConfig, lineChartConfig };
+
