@@ -195,7 +195,7 @@ export default function DashboardScreen() {
         </View>
 
         <TouchableOpacity style={styles.registerButton}>
-          <Icon name="plus" size={20} color={colors.background} />
+          <Icon name="plus" size={20} color={colors.white} />
           <Text style={styles.registerButtonText}>Registrar Treino</Text>
         </TouchableOpacity>
       </ScrollView>
