@@ -225,6 +225,24 @@ const styles = StyleSheet.create({
     padding: 10,
     overflow: "hidden",
   },
+  backgroundGlowTop: {
+    position: "absolute",
+    top: -100,
+    left: 0,
+    right: 0,
+    height: 500,
+    width: 500,
+    alignSelf: "center",
+    borderRadius: 250,
+  },
+  backgroundGlowBottom: {
+    position: "absolute",
+    bottom: -150,
+    right: -150,
+    height: 300,
+    width: 300,
+    borderRadius: 150,
+  },
 });
 
 export default styles;

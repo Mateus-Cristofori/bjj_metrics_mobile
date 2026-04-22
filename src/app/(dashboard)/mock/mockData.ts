@@ -29,7 +29,7 @@ const weeklyTrainingData = [
 ];
 
 const trainingSequenceData = [
-  { value: 5, label: "S1" },
+  { value: 50, label: "S1" },
   { value: 7, label: "S2" },
   { value: 6, label: "S3" },
   { value: 8, label: "S4" },

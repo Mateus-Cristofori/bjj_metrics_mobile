@@ -1,5 +1,6 @@
 import ProgressBar from "@/components/dashboard/ProgressBar";
 import SectionHeader from "@/components/dashboard/SectionHeader";
+import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import {
   Image,
@@ -31,6 +32,14 @@ export default function DashboardScreen() {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
+        <LinearGradient
+          colors={["rgba(56, 167, 181, 0.1)", "transparent"]}
+          style={styles.backgroundGlowTop}
+        />
+        <LinearGradient
+          colors={["rgba(56, 167, 181, 0.05)", "transparent"]}
+          style={styles.backgroundGlowBottom}
+        />
         {/* Cabeçalho */}
         <View style={styles.header}>
           <View style={styles.userInfo}>
@@ -108,14 +117,10 @@ export default function DashboardScreen() {
             adjustToWidth
             isAnimated
             animationDuration={1000}
-            // Estilo da Linha
             color={colors.accent}
             thickness={3}
-            // Estilo dos pontos
             dataPointsColor={colors.accent}
             dataPointsRadius={5}
-            // Eixos e linhas de fundo
-            maxValue={15}
             noOfSections={5}
             rulesColor={colors.textDark}
             rulesType="dashed"
