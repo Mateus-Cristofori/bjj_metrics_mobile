@@ -218,10 +218,12 @@ const styles = StyleSheet.create({
     color: colors.white,
   },
   chartCard: {
+    paddingVertical: 15,
     backgroundColor: colors.cardBackground,
     borderRadius: 10,
     marginBottom: 24,
-    padding: 8,
+    padding: 10,
+    overflow: "hidden",
   },
 });
 

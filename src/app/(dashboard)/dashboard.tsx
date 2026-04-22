@@ -1,8 +1,7 @@
-import { ProgressBar } from "@/components/dashboard/ProgressBar";
+import ProgressBar from "@/components/dashboard/ProgressBar";
 import SectionHeader from "@/components/dashboard/SectionHeader";
 import React from "react";
 import {
-  Dimensions,
   Image,
   ScrollView,
   StatusBar,
@@ -10,11 +9,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { BarChart, LineChart, PieChart } from "react-native-chart-kit";
+import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
+import Animated, { FadeIn } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import logo from "../../assets/logo.png";
-import { barChartConfig, lineChartConfig } from "./config/chartConfig";
 import styles from "./dashboard.styles";
 import {
   sortedBeltData,
@@ -84,112 +83,103 @@ export default function DashboardScreen() {
         <SectionHeader title="Treinos esta Semana" />
         <View style={styles.chartCard}>
           <BarChart
-            data={{
-              labels: weeklyTrainingData.map((p) => p.day),
-              datasets: [
-                {
-                  data: weeklyTrainingData.map((p) => p.treinos),
-                },
-              ],
-            }}
-            width={Dimensions.get("window").width - 45}
-            height={220}
-            yAxisLabel=""
-            yAxisSuffix=""
-            fromZero={true}
-            showValuesOnTopOfBars={false}
-            showBarTops={false}
-            chartConfig={barChartConfig}
-            style={{
-              borderRadius: 16,
-              paddingRight: 40,
-            }}
+            data={weeklyTrainingData}
+            adjustToWidth
+            barWidth={23}
+            barBorderRadius={4}
+            frontColor={colors.accent}
+            gradientColor={"#FF7F50"}
+            noOfSections={5}
+            yAxisThickness={0}
+            rulesColor={colors.textDark}
+            rulesType="dashed"
+            xAxisColor={colors.textMuted}
+            yAxisTextStyle={{ color: colors.textMuted }}
+            xAxisLabelTextStyle={{ color: colors.textMuted }}
+            isAnimated
+            animationDuration={400}
           />
         </View>
         {/* Gráfico de linhas */}
         <SectionHeader title="Sequência de Treinos (Últimas 6 Semanas)" />
         <View style={styles.chartCard}>
           <LineChart
-            data={{
-              labels: trainingSequenceData.map((p) => `S${p.week}`),
-              datasets: [
-                {
-                  data: trainingSequenceData.map((p) => p.count),
-                },
-              ],
-            }}
-            width={Dimensions.get("window").width - 45}
-            height={220}
-            yAxisLabel=""
-            yAxisSuffix=""
-            fromZero={true}
-            chartConfig={lineChartConfig}
+            data={trainingSequenceData}
+            adjustToWidth
+            isAnimated
+            animationDuration={1000}
+            // Estilo da Linha
+            color={colors.accent}
+            thickness={3}
+            // Estilo dos pontos
+            dataPointsColor={colors.accent}
+            dataPointsRadius={5}
+            // Eixos e linhas de fundo
+            maxValue={15}
+            noOfSections={5}
+            rulesColor={colors.textDark}
+            rulesType="dashed"
+            yAxisTextStyle={{ color: colors.textMuted }}
+            xAxisLabelTextStyle={{ color: colors.textMuted }}
+            yAxisThickness={0}
+            xAxisThickness={0}
           />
         </View>
         {/* Gráfico de rosquina */}
         <SectionHeader title="Top 3 Técnicas Treinadas" />
-        <View
+        <Animated.View
+          entering={FadeIn.duration(1000)}
           style={[
-            styles.card,
+            styles.chartCard,
             { flexDirection: "row", alignItems: "center", gap: 16 },
           ]}
         >
           <PieChart
-            data={topTechniquesData.map((item) => ({
-              name: item.technique,
-              population: item.percentage,
-              color:
-                item.technique === "Finalização"
-                  ? colors.donutSegment1
-                  : item.technique === "Guarda"
-                    ? colors.donutSegment2
-                    : colors.donutSegment3,
-              legendFontColor: colors.text,
-              legendFontSize: 12,
-            }))}
-            width={150}
-            height={120}
-            chartConfig={{
-              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            }}
-            accessor={"population"}
-            backgroundColor={"transparent"}
-            paddingLeft={"40"}
-            center={[0, 0]}
-            hasLegend={false}
-            absolute
+            data={topTechniquesData}
+            donut
+            radius={60}
+            innerRadius={40}
+            innerCircleColor="transparent"
+            textColor={colors.text}
+            textSize={12}
+            isAnimated
+            animationDuration={1200}
+            focusOnPress
           />
+          {/* Legenda customizada */}
           <View style={{ flex: 1 }}>
-            {topTechniquesData.map((item) => (
-              <View key={item.technique} style={styles.legendItem}>
+            {topTechniquesData.map((item, index) => (
+              <Animated.View
+                key={item.label}
+                entering={FadeIn.duration(400).delay(index * 100)}
+                style={styles.legendItem}
+              >
                 <View
-                  style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 8,
+                  }}
                 >
                   <View
                     style={[
                       styles.legendColorBox,
-                      {
-                        backgroundColor:
-                          item.technique === "Finalização"
-                            ? colors.donutSegment1
-                            : item.technique === "Guarda"
-                              ? colors.donutSegment2
-                              : colors.donutSegment3,
-                      },
+                      { backgroundColor: item.color },
                     ]}
                   />
-                  <Text style={styles.legendLabel}>{item.technique}</Text>
+                  <Text style={styles.legendLabel}>{item.label}</Text>
                 </View>
-                <Text style={styles.legendPercentage}>{item.percentage}%</Text>
-              </View>
+
+                <Text style={styles.legendPercentage}>{item.text}</Text>
+              </Animated.View>
             ))}
           </View>
-        </View>
+        </Animated.View>
         {/* Porcetagem de faixas */}
         <SectionHeader title="Faixas com quem rolou" />
         <View style={styles.card}>
-          {sortedBeltData.map((belt) => (
-            <ProgressBar key={belt.label} {...belt} />
+          {sortedBeltData.map((belt, index) => (
+            <ProgressBar key={belt.label} {...belt} index={index} />
           ))}
         </View>
 

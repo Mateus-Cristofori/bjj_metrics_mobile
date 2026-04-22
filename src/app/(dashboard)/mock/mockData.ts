@@ -19,28 +19,28 @@ const chartData = {
 const weekDays = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
 
 const weeklyTrainingData = [
-  { day: "Seg", treinos: 2 },
-  { day: "Ter", treinos: 0 },
-  { day: "Qua", treinos: 5 },
-  { day: "Qui", treinos: 3 },
-  { day: "Sex", treinos: 1 },
-  { day: "Sáb", treinos: 4 },
-  { day: "Dom", treinos: 0 },
+  { value: 0, label: "D" },
+  { value: 1, label: "S" },
+  { value: 10, label: "T" },
+  { value: 9, label: "Q" },
+  { value: 20, label: "Q" },
+  { value: 1, label: "S" },
+  { value: 0, label: "S" },
 ];
 
 const trainingSequenceData = [
-  { week: "1", count: 5 },
-  { week: "2", count: 7 },
-  { week: "3", count: 6 },
-  { week: "4", count: 8 },
-  { week: "5", count: 7 },
-  { week: "6", count: 9 },
+  { value: 5, label: "S1" },
+  { value: 7, label: "S2" },
+  { value: 6, label: "S3" },
+  { value: 8, label: "S4" },
+  { value: 7, label: "S5" },
+  { value: 9, label: "S6" },
 ];
 
 const topTechniquesData = [
-  { technique: "Finalização", percentage: 42 },
-  { technique: "Guarda", percentage: 35 },
-  { technique: "Raspagem", percentage: 23 },
+  { value: 42, color: "#FF6384", text: "42%", label: "Finalização" },
+  { value: 35, color: "#36A2EB", text: "35%", label: "Guarda" },
+  { value: 23, color: "#FFCE56", text: "23%", label: "Raspagem" },
 ];
 
 const beltData = [
