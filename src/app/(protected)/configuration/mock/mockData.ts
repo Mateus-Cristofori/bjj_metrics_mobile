@@ -1,4 +1,4 @@
-import { colors } from "../types/types";
+import { colors } from "../types/types.styles";
 
 const chartData = {
   labels: ["S-5", "S-4", "S-3", "S-2", "S-1", "Atual"],

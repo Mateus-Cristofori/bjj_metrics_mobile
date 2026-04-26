@@ -1,3 +1,5 @@
+import fetch from "@/services/api";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LinearGradient } from "expo-linear-gradient";
 import { RelativePathString, useRouter } from "expo-router";
 import React, { useState } from "react";
@@ -43,13 +45,26 @@ export default function LoginScreen() {
     });
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert("Erro", "Por favor, preencha o email e a senha.");
       return;
     }
 
-    router.replace("/dashboard");
+    try {
+      const { data } = await fetch.post("/auth/login", {
+        email,
+        password,
+      });
+
+      const token = data.token;
+      await AsyncStorage.setItem("token", token);
+
+      router.replace("/dashboard");
+    } catch (error) {
+      Alert.alert("Erro", "Email ou senha inválidos");
+      console.log(error);
+    }
   };
 
   return (
