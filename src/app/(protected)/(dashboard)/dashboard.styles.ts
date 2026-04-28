@@ -1,5 +1,10 @@
 import { StyleSheet } from "react-native";
-import { colors, fonts, PADDING, SUMMARY_CARD_WIDTH } from "./types/types";
+import {
+  colors,
+  fonts,
+  PADDING,
+  SUMMARY_CARD_WIDTH,
+} from "./../configuration/types/types.styles";
 
 const styles = StyleSheet.create({
   safeArea: {
@@ -242,6 +247,38 @@ const styles = StyleSheet.create({
     height: 300,
     width: 300,
     borderRadius: 150,
+  },
+  beltItem: {
+    marginBottom: 12,
+  },
+  beltHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 4,
+  },
+  beltLabel: {
+    color: colors.text,
+    fontSize: 14,
+  },
+  beltPercentage: {
+    color: colors.textMuted,
+    fontSize: 13,
+  },
+  beltBarBackground: {
+    height: 8,
+    backgroundColor: colors.textDark,
+    borderRadius: 4,
+    overflow: "hidden",
+  },
+  beltBarFill: {
+    height: "100%",
+    borderRadius: 4,
+  },
+  text: {
+    color: colors.text,
+    fontSize: 16,
+    fontWeight: "600",
   },
 });
 

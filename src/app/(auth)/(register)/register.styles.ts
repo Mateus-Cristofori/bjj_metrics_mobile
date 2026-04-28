@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   picker: {
+    color: "#94A3B8",
     ...Platform.select({
       android: { backgroundColor: "transparent" },
       ios: {},
