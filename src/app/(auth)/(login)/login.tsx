@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { RelativePathString, useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
   Image,
   KeyboardAvoidingView,
@@ -20,12 +21,14 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import logo from "../../../assets/logo.png";
 import styles from "./login.styles";
 
 export default function LoginScreen() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -45,25 +48,37 @@ export default function LoginScreen() {
     });
   };
 
+  const showLoginError = () => {
+    Toast.show({
+      type: "error",
+      text1: "Credenciais inválidas!",
+    });
+  };
+
   const handleLogin = async () => {
+    setLoading(true);
+
+    setTimeout(async () => {
+      try {
+        const { data } = await fetch.post("/auth/login", {
+          email,
+          password,
+        });
+
+        const token = data.token;
+        await AsyncStorage.setItem("token", token);
+
+        router.replace("/dashboard");
+      } catch (error) {
+        showLoginError();
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }, 2000);
     if (!email || !password) {
       Alert.alert("Erro", "Por favor, preencha o email e a senha.");
       return;
-    }
-
-    try {
-      const { data } = await fetch.post("/auth/login", {
-        email,
-        password,
-      });
-
-      const token = data.token;
-      await AsyncStorage.setItem("token", token);
-
-      router.replace("/dashboard");
-    } catch (error) {
-      Alert.alert("Erro", "Email ou senha inválidos");
-      console.log(error);
     }
   };
 
@@ -127,7 +142,11 @@ export default function LoginScreen() {
             </View>
           </View>
           <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <Text style={styles.loginButtonText}>Entrar</Text>
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.loginButtonText}>Entrar</Text>
+            )}
           </TouchableOpacity>
 
           <View style={styles.footerContainer}>
