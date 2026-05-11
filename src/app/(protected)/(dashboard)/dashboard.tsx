@@ -210,90 +210,94 @@ export default function DashboardScreen() {
         </View>
         {/* Gráfico de rosquina */}
         <SectionHeader title="Top 3 Técnicas Treinadas" />
-        {hasTechniquesData ? (
-          <Animated.View
-            entering={FadeIn.duration(1000)}
-            style={[
-              styles.chartCard,
-              { flexDirection: "row", alignItems: "center", gap: 16 },
-            ]}
-          >
-            <PieChart
-              data={topTechniquesData}
-              donut
-              radius={60}
-              innerRadius={40}
-              innerCircleColor="transparent"
-              textColor={colors.text}
-              textSize={12}
-              isAnimated
-              animationDuration={1200}
-              focusOnPress
-            />
-            {/* Legenda customizada */}
-            <View style={{ flex: 1 }}>
-              {topTechniquesData.map((item, index) => (
-                <Animated.View
-                  key={item.label}
-                  entering={FadeIn.duration(400).delay(index * 100)}
-                  style={styles.legendItem}
-                >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 8,
-                    }}
+        <View style={styles.chartCard}>
+          {hasTechniquesData ? (
+            <Animated.View
+              entering={FadeIn.duration(1000)}
+              style={[
+                styles.chartCard,
+                { flexDirection: "row", alignItems: "center", gap: 16 },
+              ]}
+            >
+              <PieChart
+                data={topTechniquesData}
+                donut
+                radius={60}
+                innerRadius={40}
+                innerCircleColor="transparent"
+                textColor={colors.text}
+                textSize={12}
+                isAnimated
+                animationDuration={1200}
+                focusOnPress
+              />
+              {/* Legenda customizada */}
+              <View style={{ flex: 1 }}>
+                {topTechniquesData.map((item, index) => (
+                  <Animated.View
+                    key={item.label}
+                    entering={FadeIn.duration(400).delay(index * 100)}
+                    style={styles.legendItem}
                   >
                     <View
-                      style={[
-                        styles.legendColorBox,
-                        { backgroundColor: item.color },
-                      ]}
-                    />
-                    <Text style={styles.legendLabel}>{item.label}</Text>
-                  </View>
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 8,
+                      }}
+                    >
+                      <View
+                        style={[
+                          styles.legendColorBox,
+                          { backgroundColor: item.color },
+                        ]}
+                      />
+                      <Text style={styles.legendLabel}>{item.label}</Text>
+                    </View>
 
-                  <Text style={styles.legendPercentage}>{item.text}</Text>
-                </Animated.View>
-              ))}
-            </View>
-          </Animated.View>
-        ) : (
-          <EmptyState message="Nenhuma técnica registrada" />
-        )}
+                    <Text style={styles.legendPercentage}>{item.text}</Text>
+                  </Animated.View>
+                ))}
+              </View>
+            </Animated.View>
+          ) : (
+            <EmptyState message="Nenhuma técnica registrada" />
+          )}
+        </View>
         {/* Porcetagem de faixas */}
         <SectionHeader title="Faixas com quem rolou" />
-        {beltData.length ? (
-          <View style={styles.card}>
-            {beltData.map((belt, index) => (
-              <View key={belt.id} style={styles.beltItem}>
-                {/* Header */}
-                <View style={styles.beltHeader}>
-                  <Text style={styles.beltLabel}>{belt.label}</Text>
-                  <Text style={styles.beltPercentage}>
-                    {belt.percentage.toFixed(0)}%
-                  </Text>
-                </View>
+        <View style={styles.chartCard}>
+          {beltData.length ? (
+            <View style={styles.card}>
+              {beltData.map((belt, index) => (
+                <View key={belt.id} style={styles.beltItem}>
+                  {/* Header */}
+                  <View style={styles.beltHeader}>
+                    <Text style={styles.beltLabel}>{belt.label}</Text>
+                    <Text style={styles.beltPercentage}>
+                      {belt.percentage.toFixed(0)}%
+                    </Text>
+                  </View>
 
-                {/* Barra */}
-                <View style={styles.beltBarBackground}>
-                  <View
-                    style={[
-                      styles.beltBarFill,
-                      {
-                        width: `${belt.percentage}%`,
-                        backgroundColor: belt.color || colors.accent,
-                      },
-                    ]}
-                  />
+                  {/* Barra */}
+                  <View style={styles.beltBarBackground}>
+                    <View
+                      style={[
+                        styles.beltBarFill,
+                        {
+                          width: `${belt.percentage}%`,
+                          backgroundColor: belt.color || colors.accent,
+                        },
+                      ]}
+                    />
+                  </View>
                 </View>
-              </View>
-            ))}
-          </View>
-        ) : (
-          <EmptyState message="Nenhum treino com faixas registrado" />
-        )}
+              ))}
+            </View>
+          ) : (
+            <EmptyState message="Nenhum treino com faixas registrado" />
+          )}
+        </View>
         <TouchableOpacity style={styles.registerButton}>
           <Icon name="plus" size={20} color={colors.white} />
           <Text style={styles.registerButtonText}>Registrar Treino</Text>
