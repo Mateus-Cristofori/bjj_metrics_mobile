@@ -55,9 +55,36 @@ const sortedBeltData = [...beltData].sort(
   (a, b) => b.percentage - a.percentage,
 );
 
+const performanceDistributionData = [
+  {
+    value: 3,
+    label: "Péssimo",
+    frontColor: "#FF4B4B",
+  },
+  {
+    value: 3,
+    label: "Ruim",
+    frontColor: "#FF7A1A",
+  },
+  {
+    value: 3,
+    label: "Médio",
+    frontColor: "#F2C200",
+  },
+  {
+    value: 3,
+    label: "Bom",
+    frontColor: "#32D96B",
+  },
+  {
+    value: 5,
+    label: "Ótimo",
+    frontColor: "#4A9A9A",
+  },
+];
+
 export {
-  chartData,
-  sortedBeltData,
+  chartData, performanceDistributionData, sortedBeltData,
   topTechniquesData,
   trainingSequenceData,
   weekDays,

@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 import {
-  colors,
-  fonts,
-  PADDING,
-  SUMMARY_CARD_WIDTH,
-} from "./../configuration/types/types.styles";
+    colors,
+    fonts,
+    PADDING,
+    SUMMARY_CARD_WIDTH,
+} from "../../../configuration/types/types.styles";
 
 const styles = StyleSheet.create({
   safeArea: {

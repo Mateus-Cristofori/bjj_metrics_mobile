@@ -58,6 +58,12 @@ export default function LoginScreen() {
   const handleLogin = async () => {
     setLoading(true);
 
+    if (!email || !password) {
+      Alert.alert("Erro", "Por favor, preencha o email e a senha.");
+      setLoading(false);
+      return;
+    }
+
     setTimeout(async () => {
       try {
         const { data } = await fetch.post("/auth/login", {
@@ -76,10 +82,6 @@ export default function LoginScreen() {
         setLoading(false);
       }
     }, 2000);
-    if (!email || !password) {
-      Alert.alert("Erro", "Por favor, preencha o email e a senha.");
-      return;
-    }
   };
 
   return (

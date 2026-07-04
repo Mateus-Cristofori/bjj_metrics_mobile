@@ -2,7 +2,8 @@ import EmptyState from "@/components/common/EmptyState";
 import SectionHeader from "@/components/dashboard/SectionHeader";
 import fetch from "@/services/api";
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useEffect } from "react";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -15,33 +16,43 @@ import { BarChart, LineChart, PieChart } from "react-native-gifted-charts";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import logo from "../../../assets/logo.png";
 import {
-  belt,
+  AthletePerformance,
+  athletePerformanceMap,
+  Belt,
   beltColorMap,
   beltLabelMap,
-  technique,
-} from "../configuration/types/types";
-import { colors } from "./../configuration/types/types.styles";
+  Technique,
+  TrainingSequenceItem,
+} from "../(dashboard)/types";
+import logo from "../../../assets/logo.png";
+import { colors } from "../../../configuration/types/types.styles";
 import styles from "./dashboard.styles";
 
 export default function DashboardScreen() {
-  const [weeklyTrainingData, setWeeklyTrainingData] = React.useState([]);
-  const [trainingSequenceData, setTrainingSequenceData] = React.useState([]);
-  const [topTechniquesData, setTopTechniquesData] = React.useState<technique[]>(
-    [],
-  );
-  const [beltData, setBeltData] = React.useState<belt[]>([]);
-  const [loading, setLoading] = React.useState(true);
+  const router = useRouter();
+
+  const [weeklyTrainingData, setWeeklyTrainingData] = useState([]);
+  const [trainingSequenceData, setTrainingSequenceData] = useState<
+    TrainingSequenceItem[]
+  >([]);
+  const [topTechniquesData, setTopTechniquesData] = useState<Technique[]>([]);
+  const [beltData, setBeltData] = useState<Belt[]>([]);
+  const [athletePerformanceData, setAthletePerformanceData] = useState<
+    AthletePerformance[]
+  >([]);
+  const [loading, setLoading] = useState(true);
 
   const hasTechniquesData = topTechniquesData.some((t) => t.value > 0);
+
+  const handleRegisterTraining = () => {
+    router.replace("/createTraining");
+  };
 
   useEffect(() => {
     async function fetchData() {
       try {
         const { data } = await fetch("/statistics/dashboard");
-
-        console.log(data);
 
         const weekly = (data.weeklyTrainings || []).map(
           (item: any, index: number) => ({
@@ -51,13 +62,20 @@ export default function DashboardScreen() {
           }),
         );
 
-        const sequence = (data.trainingSequence || []).map(
-          (item: any, index: number) => ({
-            id: `${item.week}-${index}`,
-            value: item.value,
-            label: item.week,
-          }),
+        const LAST_WEEKS = 6;
+        const rawSequence = (data.trainingSequence || []).sort(
+          (a: any, b: any) => a.week - b.week,
         );
+        const lastData = rawSequence.slice(-6);
+        const sequence = Array.from({ length: LAST_WEEKS }, (_, i) => {
+          const existing = lastData[i];
+
+          return {
+            id: `week-${i + 1}`,
+            value: existing?.value ?? 0,
+            label: `S${i + 1}`,
+          };
+        });
 
         const techniques = (data.topTechniques || []).map(
           (item: any, index: number) => ({
@@ -78,10 +96,22 @@ export default function DashboardScreen() {
           }),
         );
 
+        const performanceData = Array.isArray(data.athletePerformance)
+          ? data.athletePerformance[0]
+          : data.athletePerformance;
+
+        const athletePerformance: AthletePerformance[] = performanceData
+          ? Object.entries(performanceData).map(([label, value]) => ({
+              label: athletePerformanceMap[label] || label,
+              value: Number(value),
+            }))
+          : [];
+
         setWeeklyTrainingData(weekly);
         setTrainingSequenceData(sequence);
         setTopTechniquesData(techniques);
         setBeltData(belts);
+        setAthletePerformanceData(athletePerformance);
       } catch (error) {
         console.log("Erro ao buscar dashboard:", error);
       } finally {
@@ -165,7 +195,7 @@ export default function DashboardScreen() {
             <BarChart
               data={weeklyTrainingData}
               adjustToWidth
-              barWidth={23}
+              barWidth={25}
               barBorderRadius={4}
               frontColor={colors.accent}
               gradientColor={"#FF7F50"}
@@ -298,7 +328,35 @@ export default function DashboardScreen() {
             <EmptyState message="Nenhum treino com faixas registrado" />
           )}
         </View>
-        <TouchableOpacity style={styles.registerButton}>
+        {/* Gráfico de desempenho do atleta */}
+        <SectionHeader title="Distribuição de desempenho" />
+        <View style={styles.chartCard}>
+          {athletePerformanceData.length ? (
+            <BarChart
+              data={athletePerformanceData}
+              frontColor={colors.accent}
+              adjustToWidth
+              barWidth={30}
+              barBorderRadius={4}
+              noOfSections={5}
+              yAxisThickness={0}
+              rulesColor={colors.textDark}
+              rulesType="dashed"
+              xAxisColor={colors.textMuted}
+              yAxisTextStyle={{ color: colors.textMuted }}
+              xAxisLabelTextStyle={{ color: colors.textMuted }}
+              isAnimated
+              animationDuration={400}
+              endSpacing={10}
+            />
+          ) : (
+            <EmptyState message="Nenhum desempenho registrado" />
+          )}
+        </View>
+        <TouchableOpacity
+          onPress={handleRegisterTraining}
+          style={styles.registerButton}
+        >
           <Icon name="plus" size={20} color={colors.white} />
           <Text style={styles.registerButtonText}>Registrar Treino</Text>
         </TouchableOpacity>
