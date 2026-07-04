@@ -27,8 +27,7 @@ export default function Welcome() {
 
   const handleRedirectToLogin = () => {
     const navigate = () => {
-      // router.replace("/login");
-      router.replace("/dashboard");
+      router.replace("/login");
     };
 
     screenOpacity.value = withTiming(0, { duration: 70 }, () => {

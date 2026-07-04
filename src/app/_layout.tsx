@@ -1,6 +1,7 @@
 import * as NavigationBar from "expo-navigation-bar";
 import { Stack } from "expo-router";
 import React, { useEffect } from "react";
+import Toast from "react-native-toast-message";
 
 export default function RootLayout() {
   useEffect(() => {
@@ -8,5 +9,10 @@ export default function RootLayout() {
     NavigationBar.setButtonStyleAsync("light");
   }, []);
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  return (
+    <>
+      <Stack screenOptions={{ headerShown: false }} />
+      <Toast />
+    </>
+  );
 }

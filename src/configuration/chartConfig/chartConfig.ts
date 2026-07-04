@@ -1,4 +1,4 @@
-import { colors } from "../types/types";
+import { colors } from "../types/types.styles";
 
 const barChartConfig = {
   backgroundColor: colors.cardBackground,

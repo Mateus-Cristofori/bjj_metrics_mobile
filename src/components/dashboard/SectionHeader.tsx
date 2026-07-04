@@ -1,4 +1,4 @@
-import styles from "@/app/(dashboard)/dashboard.styles";
+import styles from "@/app/(protected)/(dashboard)/dashboard.styles";
 import React from "react";
 import { Text } from "react-native";
 
