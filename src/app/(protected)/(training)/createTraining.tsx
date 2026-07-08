@@ -1,7 +1,9 @@
 import { OptionButton } from "@/components/Training/createTraining/OptionButton";
+import fetch from "@/services/api";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
+  ActivityIndicator,
   Modal,
   ScrollView,
   StatusBar,
@@ -11,12 +13,16 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 import { styles } from "./createTraining.styles";
-
-const trainingTypes = ["Drill", "Sparring", "Competição"];
-const intensityOptions = ["Baixa", "Média", "Alta"];
-const modalityOptions = ["Gi", "No-Gi"];
-const performanceOptions = ["Péssimo", "Ruim", "Médio", "Bom", "Ótimo"];
+import { TrainingFormData } from "./form/trainingFormData";
+import {
+  intensityType,
+  modalityType,
+  performanceType,
+  trainingType,
+} from "./form/types";
+import { formatDate, formatDateToApi } from "./utils/dateUtils";
 
 function SectionTitle({ title }: { title: string }) {
   return <Text style={styles.sectionTitle}>{title}</Text>;
@@ -24,13 +30,67 @@ function SectionTitle({ title }: { title: string }) {
 
 export default function RegisterTrainingModal() {
   const router = useRouter();
-  const [trainingType, setTrainingType] = useState("Drill");
-  const [intensity, setIntensity] = useState("");
-  const [modality, setModality] = useState("Gi");
-  const [performance, setPerformance] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleCloseTrainingForm = () => {
     router.replace("/dashboard");
+  };
+
+  const handleInputChange = (
+    key: keyof TrainingFormData,
+    value: string | boolean,
+  ) => {
+    setTrainingFormData((prevState: any) => ({
+      ...prevState,
+      [key]: value,
+    }));
+  };
+
+  const [trainingFormData, setTrainingFormData] = useState<TrainingFormData>({
+    trainingDate: "",
+    trainingType: trainingType[0].value,
+    durationMinutes: "",
+    intensity: intensityType[0].value,
+    gi: true,
+    athletePerformance: performanceType[0].value,
+    notes: "",
+  });
+
+  const handleCreateTraining = async () => {
+    setLoading(true);
+
+    try {
+      const trainingDuration = parseInt(trainingFormData.durationMinutes, 10);
+
+      if (isNaN(trainingDuration)) {
+        console.log("Duração inválida.");
+        return;
+      }
+
+      const formatedPayload = {
+        ...trainingFormData,
+        trainingDate: formatDateToApi(trainingFormData.trainingDate),
+        durationMinutes: trainingDuration,
+      };
+
+      await fetch.post("/training/create", formatedPayload);
+
+      router.replace("/dashboard");
+      setTimeout(() => {
+        Toast.show({
+          type: "success",
+          text1: "Treino cadastrado com sucesso!",
+        });
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Falha na criação de treino!",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -58,10 +118,14 @@ export default function RegisterTrainingModal() {
               <SectionTitle title="DATA DO TREINO" />
 
               <TextInput
-                value="13/05/2026"
+                value={trainingFormData.trainingDate}
                 placeholder="DD/MM/AAAA"
                 placeholderTextColor="#5A6372"
                 style={styles.input}
+                maxLength={10}
+                onChangeText={(trainingDate) =>
+                  handleInputChange("trainingDate", formatDate(trainingDate))
+                }
               />
             </View>
 
@@ -69,13 +133,15 @@ export default function RegisterTrainingModal() {
               <SectionTitle title="TIPO DE TREINO" />
 
               <View style={styles.rowWrap}>
-                {trainingTypes.map((item) => (
+                {trainingType.map((item) => (
                   <OptionButton
-                    key={item}
-                    label={item}
+                    key={item.value}
+                    label={item.label}
                     styles={styles}
-                    selected={trainingType === item}
-                    onPress={() => setTrainingType(item)}
+                    selected={trainingFormData.trainingType === item.value}
+                    onPress={() =>
+                      handleInputChange("trainingType", item.value)
+                    }
                   />
                 ))}
               </View>
@@ -89,6 +155,10 @@ export default function RegisterTrainingModal() {
                 placeholderTextColor="#5A6372"
                 keyboardType="numeric"
                 style={styles.input}
+                value={trainingFormData.durationMinutes}
+                onChangeText={(durationMinutes) => {
+                  handleInputChange("durationMinutes", durationMinutes);
+                }}
               />
             </View>
 
@@ -96,13 +166,15 @@ export default function RegisterTrainingModal() {
               <SectionTitle title="INTENSIDADE" />
 
               <View style={styles.rowWrap}>
-                {intensityOptions.map((item) => (
+                {intensityType.map((item) => (
                   <OptionButton
-                    key={item}
-                    label={item}
+                    key={item.value}
+                    label={item.label}
                     styles={styles}
-                    selected={intensity === item}
-                    onPress={() => setIntensity(item)}
+                    selected={trainingFormData.intensity === item.value}
+                    onPress={() => {
+                      handleInputChange("intensity", item.value);
+                    }}
                   />
                 ))}
               </View>
@@ -112,13 +184,13 @@ export default function RegisterTrainingModal() {
               <SectionTitle title="MODALIDADE" />
 
               <View style={styles.rowWrap}>
-                {modalityOptions.map((item) => (
+                {modalityType.map((item) => (
                   <OptionButton
-                    key={item}
-                    label={item}
+                    key={item.label}
+                    label={item.label}
                     styles={styles}
-                    selected={modality === item}
-                    onPress={() => setModality(item)}
+                    selected={trainingFormData.gi === item.value}
+                    onPress={() => handleInputChange("gi", item.value)}
                   />
                 ))}
               </View>
@@ -128,13 +200,17 @@ export default function RegisterTrainingModal() {
               <SectionTitle title="SEU DESEMPENHO" />
 
               <View style={styles.rowWrap}>
-                {performanceOptions.map((item) => (
+                {performanceType.map((item) => (
                   <OptionButton
-                    key={item}
-                    label={item}
+                    key={item.value}
+                    label={item.label}
                     styles={styles}
-                    selected={performance === item}
-                    onPress={() => setPerformance(item)}
+                    selected={
+                      trainingFormData.athletePerformance === item.value
+                    }
+                    onPress={() =>
+                      handleInputChange("athletePerformance", item.value)
+                    }
                   />
                 ))}
               </View>
@@ -149,11 +225,23 @@ export default function RegisterTrainingModal() {
                 placeholder="Anotações sobre o treino..."
                 placeholderTextColor="#5A6372"
                 style={styles.notesInput}
+                value={trainingFormData.notes}
+                onChangeText={(notes) => {
+                  handleInputChange("notes", notes);
+                }}
               />
             </View>
 
-            <TouchableOpacity activeOpacity={0.9} style={styles.submitButton}>
-              <Text style={styles.submitButtonText}>Salvar treino</Text>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              style={styles.submitButton}
+              onPress={handleCreateTraining}
+            >
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.submitButtonText}>Salvar treino</Text>
+              )}
             </TouchableOpacity>
           </ScrollView>
         </View>
