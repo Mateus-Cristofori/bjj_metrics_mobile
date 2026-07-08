@@ -23,7 +23,8 @@ import {
   beltColorMap,
   beltLabelMap,
   Technique,
-  TrainingSequenceItem,
+  TrainingSequence,
+  WeeklyTraining,
 } from "../(dashboard)/types";
 import logo from "../../../assets/logo.png";
 import { colors } from "../../../configuration/types/types.styles";
@@ -32,15 +33,22 @@ import styles from "./dashboard.styles";
 export default function DashboardScreen() {
   const router = useRouter();
 
-  const [weeklyTrainingData, setWeeklyTrainingData] = useState([]);
+  const [weeklyTrainingData, setWeeklyTrainingData] = useState<
+    WeeklyTraining[]
+  >([]);
   const [trainingSequenceData, setTrainingSequenceData] = useState<
-    TrainingSequenceItem[]
+    TrainingSequence[]
   >([]);
   const [topTechniquesData, setTopTechniquesData] = useState<Technique[]>([]);
   const [beltData, setBeltData] = useState<Belt[]>([]);
   const [athletePerformanceData, setAthletePerformanceData] = useState<
     AthletePerformance[]
   >([]);
+  const [totalTrainings, setTotalTrainings] = useState();
+  const [trainingStreak, setTrainingStreak] = useState();
+  const [totalRolls, setTotalRolls] = useState();
+  const [athleteName, setAthleteName] = useState("");
+
   const [loading, setLoading] = useState(true);
 
   const hasTechniquesData = topTechniquesData.some((t) => t.value > 0);
@@ -112,6 +120,10 @@ export default function DashboardScreen() {
         setTopTechniquesData(techniques);
         setBeltData(belts);
         setAthletePerformanceData(athletePerformance);
+        setTotalTrainings(data.totalTrainings);
+        setTrainingStreak(data.trainingStreak);
+        setTotalRolls(data.totalRolls);
+        setAthleteName(data.athleteName);
       } catch (error) {
         console.log("Erro ao buscar dashboard:", error);
       } finally {
@@ -147,7 +159,7 @@ export default function DashboardScreen() {
               <Image source={logo} style={styles.logoImage} />
             </View>
             <View>
-              <Text style={styles.userName}>Olá, Mateus</Text>
+              <Text style={styles.userName}>Olá, {athleteName}</Text>
             </View>
           </View>
           <TouchableOpacity>
@@ -159,17 +171,17 @@ export default function DashboardScreen() {
         <View style={styles.summaryContainer}>
           <View style={styles.summaryCard}>
             <Icon name="chart-bar" size={24} color={colors.accent} />
-            <Text style={styles.summaryCardValue}>48</Text>
-            <Text style={styles.summaryCardLabel}>Treinos</Text>
+            <Text style={styles.summaryCardValue}>{totalTrainings}</Text>
+            <Text style={styles.summaryCardLabel}>Treinos totais</Text>
           </View>
           <View style={styles.summaryCard}>
             <Icon name="target" size={24} color={colors.accent} />
-            <Text style={styles.summaryCardValue}>12</Text>
-            <Text style={styles.summaryCardLabel}>Lutas</Text>
+            <Text style={styles.summaryCardValue}>{totalRolls}</Text>
+            <Text style={styles.summaryCardLabel}>Lutas totais</Text>
           </View>
           <View style={styles.summaryCard}>
             <Icon name="trending-up" size={24} color={colors.accent} />
-            <Text style={styles.summaryCardValue}>6d</Text>
+            <Text style={styles.summaryCardValue}>{trainingStreak}</Text>
             <Text style={styles.summaryCardLabel}>Streak</Text>
           </View>
         </View>
@@ -200,6 +212,7 @@ export default function DashboardScreen() {
               frontColor={colors.accent}
               gradientColor={"#FF7F50"}
               noOfSections={5}
+              maxValue={15}
               yAxisThickness={0}
               rulesColor={colors.textDark}
               rulesType="dashed"
@@ -329,7 +342,7 @@ export default function DashboardScreen() {
           )}
         </View>
         {/* Gráfico de desempenho do atleta */}
-        <SectionHeader title="Distribuição de desempenho" />
+        <SectionHeader title="Distribuição de desempenho (DESTA SEMANA)" />
         <View style={styles.chartCard}>
           {athletePerformanceData.length ? (
             <BarChart

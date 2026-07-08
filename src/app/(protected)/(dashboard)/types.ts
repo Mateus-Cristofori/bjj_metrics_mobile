@@ -17,11 +17,13 @@ type AthletePerformance = {
   value: number;
 };
 
-type TrainingSequenceItem = {
+type TrainingSequence = {
   id: string;
   value: number;
   label: string;
 };
+
+type WeeklyTraining = { id: string; value: number; label: string };
 
 const athletePerformanceMap: Record<string, string> = {
   veryBad: "Péssimo",
@@ -54,6 +56,7 @@ export {
   beltColorMap,
   beltLabelMap,
   Technique,
-  TrainingSequenceItem
+  TrainingSequence,
+  WeeklyTraining
 };
 

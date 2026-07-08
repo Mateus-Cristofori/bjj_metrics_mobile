@@ -13,6 +13,7 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 import { styles } from "./createTraining.styles";
 import { TrainingFormData } from "./form/trainingFormData";
 import {
@@ -72,11 +73,21 @@ export default function RegisterTrainingModal() {
         durationMinutes: trainingDuration,
       };
 
-      console.log(trainingFormData);
-
       await fetch.post("/training/create", formatedPayload);
+
+      router.replace("/dashboard");
+      setTimeout(() => {
+        Toast.show({
+          type: "success",
+          text1: "Treino cadastrado com sucesso!",
+        });
+      }, 1000);
     } catch (error) {
       console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Falha na criação de treino!",
+      });
     } finally {
       setLoading(false);
     }
