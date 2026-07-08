@@ -14,8 +14,9 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import RollFormCard from "./components/RollFormCard";
 import { styles } from "./createTraining.styles";
-import { TrainingFormData } from "./form/trainingFormData";
+import { TrainingFormData, TrainingRolls } from "./form/trainingFormData";
 import {
   intensityType,
   modalityType,
@@ -54,7 +55,49 @@ export default function RegisterTrainingModal() {
     gi: true,
     athletePerformance: performanceType[0].value,
     notes: "",
+    rolls: [],
   });
+
+  const handleAddNewTrainingRoll = () => {
+    const newTrainingRoll: TrainingRolls = {
+      id: Date.now().toString(),
+      partnerName: "",
+      partnerBelt: "",
+      durationMinutes: "",
+      intensity: "",
+      startPosition: "",
+      submissionsApplied: "0",
+      submissionsSuffered: "0",
+      sweeps: "0",
+      passes: "0",
+      notes: "",
+    };
+
+    setTrainingFormData((prevState: any) => ({
+      ...prevState,
+      rolls: [...prevState.rolls, newTrainingRoll],
+    }));
+  };
+
+  const handleRemoveRoll = (idToRemove: string) => {
+    setTrainingFormData((prevState) => ({
+      ...prevState,
+      rolls: prevState.rolls.filter((roll) => roll.id !== idToRemove),
+    }));
+  };
+
+  const handleRollInputChange = (
+    id: string,
+    field: keyof TrainingRolls,
+    value: any,
+  ) => {
+    setTrainingFormData((prevState) => ({
+      ...prevState,
+      rolls: prevState.rolls.map((roll) =>
+        roll.id === id ? { ...roll, [field]: value } : roll,
+      ),
+    }));
+  };
 
   const handleCreateTraining = async () => {
     setLoading(true);
@@ -230,6 +273,28 @@ export default function RegisterTrainingModal() {
                   handleInputChange("notes", notes);
                 }}
               />
+            </View>
+
+            <View style={styles.section}>
+              <SectionTitle title="ROLAS DESTE TREINO" />
+              {trainingFormData.rolls.map((rola, index) => (
+                <RollFormCard
+                  key={rola.id}
+                  index={index + 1}
+                  data={rola}
+                  onChange={(field, value) =>
+                    handleRollInputChange(rola.id, field, value)
+                  }
+                  onRemove={() => handleRemoveRoll(rola.id)}
+                />
+              ))}
+              <TouchableOpacity
+                style={styles.addRollButton}
+                activeOpacity={0.8}
+                onPress={handleAddNewTrainingRoll}
+              >
+                <Text style={styles.addRollButtonText}>Adicionar rola</Text>
+              </TouchableOpacity>
             </View>
 
             <TouchableOpacity
