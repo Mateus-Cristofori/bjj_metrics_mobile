@@ -3,7 +3,6 @@ import {
   colors,
   fonts,
   PADDING,
-  SUMMARY_CARD_WIDTH,
 } from "../../../configuration/types/types.styles";
 
 const styles = StyleSheet.create({
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     gap: 4,
-    flexShrink: 1
+    flexShrink: 1,
   },
   summaryCardValue: {
     fontFamily: fonts.main,
