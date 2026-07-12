@@ -5,7 +5,6 @@ import { RelativePathString, useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
-  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -59,7 +58,10 @@ export default function LoginScreen() {
     setLoading(true);
 
     if (!email || !password) {
-      Alert.alert("Erro", "Por favor, preencha o email e a senha.");
+      Toast.show({
+        type: "error",
+        text1: "Por favor, preencha o email e senha.",
+      });
       setLoading(false);
       return;
     }

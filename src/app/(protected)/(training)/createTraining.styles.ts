@@ -128,4 +128,23 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     letterSpacing: 0.3,
   },
+
+  addRollButton: {
+    height: 62,
+    borderRadius: 16,
+    borderWidth: 1.5,
+    borderStyle: "dashed",
+    borderColor: "#38A7B5",
+    backgroundColor: "transparent",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 20,
+  },
+
+  addRollButtonText: {
+    color: "#7EE7F3",
+    fontSize: 16,
+    fontWeight: "500",
+    letterSpacing: 0.5,
+  },
 });
