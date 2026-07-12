@@ -3,25 +3,27 @@ import React from "react";
 import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { styles as mainStyles } from "../createTraining.styles";
 import { TrainingRolls } from "../form/trainingFormData";
+import { intensityType } from "../form/types";
 import { styles } from "./style/rollForm.styles";
 
 export const beltTypes = [
-  { label: "Branco", value: "BRANCO" },
-  { label: "Azul", value: "AZUL" },
-  { label: "Roxa", value: "ROXA" },
-  { label: "Marrom", value: "MARROM" },
-  { label: "Preta", value: "PRETA" },
+  { label: "Branco", value: "WHITE" },
+  { label: "Azul", value: "BLUE" },
+  { label: "Roxa", value: "PURPLE" },
+  { label: "Marrom", value: "BROWN" },
+  { label: "Preta", value: "BLACK" },
 ];
 
 export const startingPositionTypes = [
-  { label: "Em pé", value: "EM_PE" },
-  { label: "Guarda fechada", value: "GUARDA_FECHADA" },
-  { label: "Guarda aberta", value: "GUARDA_ABERTA" },
-  { label: "Meia guarda", value: "MEIA_GUARDA" },
-  { label: "Lateral", value: "LATERAL" },
-  { label: "Montada", value: "MONTADA" },
-  { label: "Costas", value: "COSTAS" },
-  { label: "Joelho na barriga", value: "JOELHO_BARRIGA" },
+  { label: "Em pé", value: "STANDING" },
+  { label: "Guarda fechada", value: "CLOSED_GUARD" },
+  { label: "Guarda aberta", value: "OPEN_GUARD" },
+  { label: "Meia guarda", value: "HALF_GUARD" },
+  { label: "De joelhos", value: "ON_KNEES" },
+  { label: "Lateral", value: "SIDE" },
+  { label: "Montada", value: "MOUNT" },
+  { label: "Costas", value: "BACK_CONTROL" },
+  { label: "Joelho na barriga", value: "KNEE_ON_BELLY" },
 ];
 
 interface RollFormCardProps {
@@ -125,6 +127,24 @@ export default function RollFormCard({
           value={String(data.durationMinutes)}
           onChangeText={(value) => onChange("durationMinutes", value)}
         />
+      </View>
+
+      <View style={styles.fieldGroup}>
+        <Text style={styles.fieldLabel}>INTENSIDADE</Text>
+
+        <View style={styles.rowWrap}>
+          {intensityType.map((item) => (
+            <OptionButton
+              key={item.value}
+              label={item.label}
+              styles={mainStyles}
+              selected={data.intensity === item.value}
+              onPress={() => {
+                onChange("intensity", item.value);
+              }}
+            />
+          ))}
+        </View>
       </View>
 
       <View style={styles.fieldGroup}>

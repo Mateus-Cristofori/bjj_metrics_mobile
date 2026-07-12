@@ -103,22 +103,30 @@ export default function RegisterTrainingModal() {
     setLoading(true);
 
     try {
+      const { rolls, ...trainingData } = trainingFormData;
+
       const trainingDuration = parseInt(trainingFormData.durationMinutes, 10);
 
       if (isNaN(trainingDuration)) {
         console.log("Duração inválida.");
         return;
       }
-
+      
       const formatedPayload = {
-        ...trainingFormData,
-        trainingDate: formatDateToApi(trainingFormData.trainingDate),
-        durationMinutes: trainingDuration,
+        trainingRequest: {
+          ...trainingData,
+          trainingDate: formatDateToApi(trainingData.trainingDate),
+          durationMinutes: parseInt(trainingData.durationMinutes, 10) || 0,
+        },
+        rollRequest: {
+          rolls: rolls,
+        },
       };
 
-      await fetch.post("/training/create", formatedPayload);
+      await fetch.post("/training/create/with-rolls", formatedPayload);
 
       router.replace("/dashboard");
+
       setTimeout(() => {
         Toast.show({
           type: "success",
