@@ -30,6 +30,7 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const screenOpacity = useSharedValue(1);
   const animatedScreenStyle = useAnimatedStyle(() => {
@@ -139,10 +140,17 @@ export default function LoginScreen() {
                 style={styles.input}
                 placeholder="Digite sua senha"
                 placeholderTextColor="#94A3B8"
-                secureTextEntry
+                secureTextEntry={!showPassword}
                 value={password}
                 onChangeText={setPassword}
               />
+              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                <Icon
+                  name={showPassword ? "eye-off-outline" : "eye-outline"}
+                  size={20}
+                  color="#64748B"
+                />
+              </TouchableOpacity>
             </View>
           </View>
           <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
