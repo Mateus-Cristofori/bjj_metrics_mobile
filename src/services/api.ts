@@ -9,7 +9,13 @@ const fetch = axios.create({
 });
 
 const isPublicRoute = (url?: string) => {
-  return url?.includes("/auth/login") || url?.includes("/onboarding");
+  return (
+    url?.includes("/auth/login") ||
+    url?.includes("/onboarding") ||
+    url?.includes("/account/send/code/change-password") ||
+    url?.includes("/account/password-recovery/verify") ||
+    url?.includes("/account/change-password")
+  );
 };
 
 fetch.interceptors.request.use(async (config) => {

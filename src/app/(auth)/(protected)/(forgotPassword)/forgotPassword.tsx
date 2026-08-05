@@ -1,8 +1,8 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
+import { RelativePathString, useRouter } from "expo-router";
 import React, { useState } from "react";
 import {
-  Alert,
+  ActivityIndicator,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -12,21 +12,43 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import logo from "../../../assets/logo.png";
+import logo from "../../../../assets/logo.png";
+import { sendCodeChangePassword } from "../service/recoveryService";
 import styles from "./forgotPassword.styles";
 
 export default function ForgotPasswordScreen() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
 
-  // ! Chamada para o backend
-  const handleSendInstructions = () => {
-    if (!email) {
-      Alert.alert("Erro", "Por favor, digite seu email para continuar.");
-      return;
+  const handleSendInstructions = async () => {
+    setLoading(true);
+    try {
+      if (!email) {
+        Toast.show({
+          type: "error",
+          text1: "Por favor, digite seu email para continuar.",
+        });
+        setLoading(false);
+        return;
+      }
+
+      await sendCodeChangePassword({ email });
+
+      router.replace("/verifyCode" as RelativePathString);
+    } catch (error: any) {
+      console.error("Erro ao enviar instruções de recuperação:", error);
+      Toast.show({
+        type: "error",
+        text1:
+          error?.response?.data?.message ||
+          "Ocorreu um erro ao enviar as instruções. Por favor, tente novamente.",
+      });
+    } finally {
+      setLoading(false);
     }
-    router.replace("/login");
   };
 
   const handleGoBack = () => {
@@ -69,7 +91,7 @@ export default function ForgotPasswordScreen() {
             />
             <TextInput
               style={styles.input}
-              placeholder="seuemail@exemplo.com"
+              placeholder="seu@email.com"
               placeholderTextColor="#94A3B8"
               keyboardType="email-address"
               autoCapitalize="none"
@@ -82,7 +104,14 @@ export default function ForgotPasswordScreen() {
           style={styles.submitButton}
           onPress={handleSendInstructions}
         >
-          <Text style={styles.submitButtonText}>Trocar senha</Text>
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <>
+              <Text style={styles.submitButtonText}>Enviar Instruções</Text>
+              <Icon name="chevron-right" size={24} color="#FFFFFF" />
+            </>
+          )}
         </TouchableOpacity>
 
         <View style={styles.footer}>

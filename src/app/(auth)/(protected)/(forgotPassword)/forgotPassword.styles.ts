@@ -70,13 +70,11 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#000",
     borderWidth: 1,
     borderColor: "#E2E8F0",
     borderRadius: 8,
     height: 50,
     paddingHorizontal: 15,
-    width: "100%",
   },
   inputGroup: { width: "100%", marginBottom: 20 },
   icon: { marginRight: 10 },
@@ -90,6 +88,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
   },
   submitButton: {
+    flexDirection: "row",
     width: "100%",
     height: 50,
     backgroundColor: "#38A7B5",
