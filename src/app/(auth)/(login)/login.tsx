@@ -74,8 +74,10 @@ export default function LoginScreen() {
           password,
         });
 
-        const token = data.token;
-        await AsyncStorage.setItem("token", token);
+        const accessToken = data.accessToken;
+        const refreshToken = data.refreshToken;
+        await AsyncStorage.setItem("accessToken", accessToken);
+        await AsyncStorage.setItem("refreshToken", refreshToken);
 
         router.replace("/dashboard");
       } catch (error) {
