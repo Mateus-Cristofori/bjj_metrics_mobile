@@ -48,15 +48,11 @@ export default function Index() {
           return;
         }
 
-        // Nenhum token válido
         await AsyncStorage.multiRemove(["accessToken", "refreshToken"]);
 
         router.replace("/login");
       } catch (error) {
-        console.error("Erro ao verificar autenticação:", error);
-
         await AsyncStorage.multiRemove(["accessToken", "refreshToken"]);
-
         router.replace("/login");
       }
     };
