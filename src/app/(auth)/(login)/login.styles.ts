@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
     marginTop: 25,
     flexWrap: "wrap",
   },
-
   separator: {
     fontSize: 14,
     color: "#64748B",
