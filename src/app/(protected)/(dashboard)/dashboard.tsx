@@ -1,9 +1,10 @@
 import EmptyState from "@/components/common/EmptyState";
 import SectionHeader from "@/components/dashboard/SectionHeader";
+import { SidebarMenu } from "@/components/global/menu/sideBarMenu";
 import fetch from "@/services/api";
 import { LinearGradient } from "expo-linear-gradient";
-import { useRouter } from "expo-router";
-import React, { useEffect, useState } from "react";
+import { RelativePathString, useRouter } from "expo-router";
+import { default as React, useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -33,6 +34,8 @@ import styles from "./dashboard.styles";
 export default function DashboardScreen() {
   const router = useRouter();
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const [weeklyTrainingData, setWeeklyTrainingData] = useState<
     WeeklyTraining[]
   >([]);
@@ -54,7 +57,10 @@ export default function DashboardScreen() {
   const hasTechniquesData = topTechniquesData.some((t) => t.value > 0);
 
   const handleRegisterTraining = () => {
-    router.replace("/createTraining");
+    router.replace({
+      pathname: "/createTraining",
+      params: { title: "Registrar Treino", route: "/dashboard" },
+    });
   };
 
   useEffect(() => {
@@ -155,16 +161,33 @@ export default function DashboardScreen() {
         {/* Cabeçalho */}
         <View style={styles.header}>
           <View style={styles.userInfo}>
-            <View style={styles.avatarPlaceholder}>
-              <Image source={logo} style={styles.logoImage} />
-            </View>
-            <View>
-              <Text style={styles.userName}>Olá, {athleteName}</Text>
+            <TouchableOpacity
+              onPress={() => setIsMenuOpen(true)}
+              style={styles.menuButton}
+            >
+              <Icon name="menu" size={24} color="#ffffff" />
+              <SidebarMenu
+                isOpen={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+                currentRoute="Dashboard"
+                onNavigate={(route) => {
+                  router.push(route as RelativePathString);
+                }}
+              />
+            </TouchableOpacity>
+
+            <Image source={logo} style={styles.logoImage} />
+            <View style={styles.textContainer}>
+              <Text style={styles.greeting}>Olá,</Text>
+              <Text
+                style={styles.userName}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {athleteName}
+              </Text>
             </View>
           </View>
-          <TouchableOpacity>
-            <Icon name="cog-outline" size={24} color={colors.text} />
-          </TouchableOpacity>
         </View>
         {/* Cartões de Resumo */}
         <SectionHeader title="Resumo" />

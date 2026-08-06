@@ -1,6 +1,10 @@
 import { OptionButton } from "@/components/Training/createTraining/OptionButton";
 import fetch from "@/services/api";
-import { useRouter } from "expo-router";
+import {
+  RelativePathString,
+  useLocalSearchParams,
+  useRouter,
+} from "expo-router";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -30,11 +34,13 @@ function SectionTitle({ title }: { title: string }) {
 }
 
 export default function RegisterTrainingModal() {
+  const { title, route } = useLocalSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const handleCloseTrainingForm = () => {
-    router.replace("/dashboard");
+    console.log("Closing training form, navigating to:", route);
+    router.replace(route as RelativePathString);
   };
 
   const handleInputChange = (
@@ -108,10 +114,13 @@ export default function RegisterTrainingModal() {
       const trainingDuration = parseInt(trainingFormData.durationMinutes, 10);
 
       if (isNaN(trainingDuration)) {
-        console.log("Duração inválida.");
+        Toast.show({
+          type: "error",
+          text1: "Duração inválida!",
+        });
         return;
       }
-      
+
       const formatedPayload = {
         trainingRequest: {
           ...trainingData,
@@ -151,7 +160,7 @@ export default function RegisterTrainingModal() {
       <SafeAreaView style={styles.overlay}>
         <View style={styles.container}>
           <View style={styles.header}>
-            <Text style={styles.headerTitle}>Registrar Treino</Text>
+            <Text style={styles.headerTitle}>{title}</Text>
 
             <TouchableOpacity
               onPress={handleCloseTrainingForm}
