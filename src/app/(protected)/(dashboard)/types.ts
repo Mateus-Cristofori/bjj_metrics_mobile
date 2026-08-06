@@ -46,7 +46,7 @@ const beltColorMap: Record<string, string> = {
   BLUE: "#3B82F6",
   PURPLE: "#8B5CF6",
   BROWN: "#92400E",
-  BLACK: "#111827",
+  BLACK: "#000",
 };
 
 export {
@@ -57,6 +57,5 @@ export {
   beltLabelMap,
   Technique,
   TrainingSequence,
-  WeeklyTraining
+  WeeklyTraining,
 };
-
